@@ -63,6 +63,28 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/users/:email', async(req, res)=>{
+      const email = req.params.email;
+      const query = {email : email};
+      const result = await usersCollection.findOne(query);
+      res.send(result) 
+    })
+
+
+    //Instructor
+    app.patch('/users/instructor/:id', async(req, res)=>{
+      const id = req.params.id;
+      query = {_id : new ObjectId(id)}
+
+      const updateRole ={
+        $set:{
+          instructor : 'instructor'
+        }
+      }
+      const result = await usersCollection.updateOne(query, updateRole);
+      res.send(result)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
