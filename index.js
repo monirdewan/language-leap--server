@@ -75,6 +75,11 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/classes', async(req, res)=>{
+      const result = await classesCollection.find().toArray();
+      res.send(result)
+    })
+
 
     //Instructor
     app.patch('/users/instructor/:id', async(req, res)=>{
@@ -95,6 +100,16 @@ async function run() {
     app.post('/classes',async(req, res)=>{
       const addClass = req.body;
       const result = await classesCollection.insertOne(addClass);
+      res.send(result)
+    })
+
+    app.get('/myclasses', async(req, res)=>{
+      const email = req.query.email;
+      if(!email){
+        res.send([])
+      }
+      const query = {iEmail:email}
+      const result = await classesCollection.find(query).toArray();
       res.send(result)
     })
 
