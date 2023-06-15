@@ -32,6 +32,7 @@ async function run() {
     await client.connect();
 
     const usersCollection = client.db('languageLeapDB').collection("users");
+    const classesCollection = client.db('languageLeapDB').collection("classes");
 
 //All Users
     app.post('/users', async(req, res)=>{
@@ -63,13 +64,7 @@ async function run() {
       res.send(result)
     })
 
-    // app.get('/users/:email', async(req, res)=>{
-    //   const email = req.params.email;
-    //   const query = {email:email};
-    //   const result = await usersCollection.findOne(query);
-    //   res.send(result) 
-    // })
-
+    
     app.get('/userroll', async(req, res)=>{
       const email = req.query.email;
       if(!email){
@@ -92,6 +87,14 @@ async function run() {
         }
       }
       const result = await usersCollection.updateOne(query, updateRole);
+      res.send(result)
+    })
+
+
+    //Class Collection
+    app.post('/classes',async(req, res)=>{
+      const addClass = req.body;
+      const result = await classesCollection.insertOne(addClass);
       res.send(result)
     })
 
