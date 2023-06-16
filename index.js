@@ -80,7 +80,7 @@ async function run() {
       res.send(result)
     })
 
-    app.put('updtstatus/:id', async(req, res)=>{
+    app.put('/updtstatus/:id', async(req, res)=>{
       const id = req.params.id;
       const query = {_id : new ObjectId(id)};
       const options = {upsert:true};
@@ -91,6 +91,19 @@ async function run() {
         }
       }
       const result = await classesCollection.updateOne(query, updateDoc,options)
+      res.send(result)
+    })
+
+    app.patch('/addfeedback/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)};
+      const newFeedback = req.body;
+      const updateDoc ={
+        $set:{
+          feedback:newFeedback.feedback
+        }
+      }
+      const result = classesCollection.updateOne(query, updateDoc)
       res.send(result)
     })
 
