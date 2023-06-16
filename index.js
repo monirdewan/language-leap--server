@@ -80,6 +80,20 @@ async function run() {
       res.send(result)
     })
 
+    app.put('updtstatus/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)};
+      const options = {upsert:true};
+      const updateStatus = req.body;
+      const updateDoc = {
+        $set:{
+          status:updateStatus.status
+        }
+      }
+      const result = await classesCollection.updateOne(query, updateDoc,options)
+      res.send(result)
+    })
+
 
     //Instructor
     app.patch('/users/instructor/:id', async(req, res)=>{
