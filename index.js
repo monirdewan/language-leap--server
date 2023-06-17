@@ -100,7 +100,7 @@ async function run() {
       const newFeedback = req.body;
       const updateDoc ={
         $set:{
-          feedback:newFeedback.feedback
+          feedback:newFeedback.text
         }
       }
       const result = classesCollection.updateOne(query, updateDoc)
